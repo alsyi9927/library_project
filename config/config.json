@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "nb123456",
+    "database": "reservation",
+    "host": "192.168.56.101",
+    "dialect": "mariadb"
+  },
+  "test": {
+    "username": "root",
+    "password": "nb123456",
+    "database": "reservation",
+    "host": "192.168.56.101",
+    "dialect": "mariadb"
+  },
+  "production": {
+    "username": "root",
+    "password": "nb123456",
+    "database": "reservation",
+    "host": "192.168.56.101",
+    "dialect": "mariadb"
+  }
+}

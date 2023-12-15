@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/css/bootstrap/bootstrap.min.css" crossorigin="anonymous">
+  <script src="/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+  <script src="/javascripts/devExtreme/dx.all.js"></script>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/css/devExtreme/dx.material.blue.light.css" />
+  <title>예약 현황</title>
+</head>
+<body>
+  <header>
+    <div class="navbar navbar-dark bg-dark shadow-sm mb-3">
+      <div class="container d-flex justify-content">
+        <a href="/" class="navbar-brand d-flex align-items-center">
+          <strong>도서관 예약 현황</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <h3 class="text-center">도서관 좌석 예약 현황</h3>
+  <table class="table">
+    <thead class="thead-light">
+      <tr class="text-center">
+        <th>좌석번호</th>
+        <th>잔여 시간</th>
+        <th>예약되었는지?</th>
+        <th>예약</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% seats.forEach(seat => { %>
+        <tr class="text-center">
+          <td><%= seat.seatNumber %></td>
+          <td class="remaining-time" data-remaining-time="<%= seat.remainingTime %>"><%= seat.remainingTime %> 분</td>
+          <td class="reservation"><%= seat.isReserved ? '예약 중' : '예약 가능' %></td>
+          <td><a href="/seat/<%= seat.seatNumber %>">예약</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <script>
+    $(document).ready(function() {
+      setInterval(updateRemainingTime, 1000);
+    });
+  
+    function updateRemainingTime() {
+      $('.remaining-time').each(function() {
+        const remainingTime = parseInt($(this).data('remaining-time'));
+        const isReserved = $(this).closest('tr').find('.reservation').text().trim() === '예약 중';
+  
+        if (isReserved && remainingTime > 0) {
+          $(this).data('remaining-time', remainingTime - 1);
+          $(this).text(remainingTime - 1 + ' 초');
+        } else if (isReserved) {
+          $(this).text('시간 만료');
+        }
+      });
+    }
+  </script>
+  
+</body>
+</html>
+
+
